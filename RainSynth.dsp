@@ -30,6 +30,6 @@ bubble = os.osc(f) * (exp(-damp*time) : si.smooth(0.99)) + (os.osc(f - 30) * (ex
         time = 0 : (select2(trig>trig'):+(1)) ~ _ : ba.samp2sec * random(0.5, 1);
     };
 
-rain_drop = bubble * 0.7 * rain_volume <: _ * random(0, 1), _ * random(0, 1);
+rain_drop = bubble * 0.007 * rain_volume <: _ * random(0, 1), _ * random(0, 1);
 
 process  =  rain,rain_drop :> _,_;
