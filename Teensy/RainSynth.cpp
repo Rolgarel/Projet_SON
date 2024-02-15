@@ -10198,34 +10198,38 @@ class mydsp : public dsp {
 	FAUSTFLOAT fButton0;
 	float fVec2[2];
 	int iRec2[2];
+	FAUSTFLOAT fHslider0;
+	FAUSTFLOAT fHslider1;
+	FAUSTFLOAT fHslider2;
 	int fSampleRate;
 	float fConst1;
+	FAUSTFLOAT fHslider3;
 	float fConst2;
 	float fRec1[2];
-	float fConst3;
 	float fRec3[2];
-	float fConst4;
 	float fRec5[2];
-	float fConst5;
+	FAUSTFLOAT fHslider4;
 	float fRec6[2];
 	int IOTA0;
-	int iConst7;
+	int iConst4;
 	float fRec4[2048];
+	FAUSTFLOAT fHslider5;
 	int iRec8[2];
-	float fConst8;
-	float fConst9;
-	FAUSTFLOAT fHslider0;
+	float fConst5;
+	float fConst6;
+	FAUSTFLOAT fHslider6;
 	float fRec9[2];
 	int iRec11[2];
-	FAUSTFLOAT fHslider1;
+	FAUSTFLOAT fHslider7;
 	float fRec16[2];
-	float fConst10;
+	float fConst7;
 	float fRec17[4];
 	float fVec3[2];
 	float fRec10[2];
-	int iConst11;
+	int iConst8;
 	float fRec7[32768];
-	FAUSTFLOAT fHslider2;
+	FAUSTFLOAT fHslider8;
+	FAUSTFLOAT fHslider9;
 	
  public:
 	mydsp() {}
@@ -10293,24 +10297,28 @@ class mydsp : public dsp {
 	virtual void instanceConstants(int sample_rate) {
 		fSampleRate = sample_rate;
 		float fConst0 = std::min<float>(1.92e+05f, std::max<float>(1.0f, float(fSampleRate)));
-		fConst1 = 18.19125f / fConst0;
-		fConst2 = 4.9e+02f / fConst0;
-		fConst3 = 242.55f / fConst0;
-		fConst4 = 1.0f / fConst0;
-		fConst5 = 0.75f / fConst0;
-		float fConst6 = 0.1f * fConst0;
-		iConst7 = int(std::min<float>(fConst6, std::max<float>(0.0f, 0.01f * fConst0))) + 1;
-		fConst8 = 44.1f / fConst0;
-		fConst9 = 1.0f - fConst8;
-		fConst10 = 3.1415927f / fConst0;
-		iConst11 = int(std::min<float>(fConst6, std::max<float>(0.0f, fConst6))) + 1;
+		fConst1 = 0.075f / fConst0;
+		fConst2 = 1.0f / fConst0;
+		float fConst3 = 0.1f * fConst0;
+		iConst4 = int(std::min<float>(fConst3, std::max<float>(0.0f, 0.01f * fConst0))) + 1;
+		fConst5 = 44.1f / fConst0;
+		fConst6 = 1.0f - fConst5;
+		fConst7 = 3.1415927f / fConst0;
+		iConst8 = int(std::min<float>(fConst3, std::max<float>(0.0f, fConst3))) + 1;
 	}
 	
 	virtual void instanceResetUserInterface() {
 		fButton0 = FAUSTFLOAT(0.0f);
-		fHslider0 = FAUSTFLOAT(0.0f);
-		fHslider1 = FAUSTFLOAT(6e+03f);
-		fHslider2 = FAUSTFLOAT(1.0f);
+		fHslider0 = FAUSTFLOAT(0.5f);
+		fHslider1 = FAUSTFLOAT(1476.0f);
+		fHslider2 = FAUSTFLOAT(0.5f);
+		fHslider3 = FAUSTFLOAT(0.5f);
+		fHslider4 = FAUSTFLOAT(0.5f);
+		fHslider5 = FAUSTFLOAT(0.5f);
+		fHslider6 = FAUSTFLOAT(0.0f);
+		fHslider7 = FAUSTFLOAT(6e+03f);
+		fHslider8 = FAUSTFLOAT(1.0f);
+		fHslider9 = FAUSTFLOAT(0.5f);
 	}
 	
 	virtual void instanceClear() {
@@ -10386,10 +10394,17 @@ class mydsp : public dsp {
 	
 	virtual void buildUserInterface(UI* ui_interface) {
 		ui_interface->openVerticalBox("RainSynth");
+		ui_interface->addHorizontalSlider("damp", &fHslider0, FAUSTFLOAT(0.5f), FAUSTFLOAT(0.4f), FAUSTFLOAT(0.6f), FAUSTFLOAT(0.01f));
+		ui_interface->addHorizontalSlider("damp2", &fHslider4, FAUSTFLOAT(0.5f), FAUSTFLOAT(0.4f), FAUSTFLOAT(0.6f), FAUSTFLOAT(0.01f));
 		ui_interface->addButton("drop", &fButton0);
-		ui_interface->addHorizontalSlider("freq", &fHslider1, FAUSTFLOAT(6e+03f), FAUSTFLOAT(1e+03f), FAUSTFLOAT(1e+04f), FAUSTFLOAT(0.01f));
-		ui_interface->addHorizontalSlider("gain", &fHslider0, FAUSTFLOAT(0.0f), FAUSTFLOAT(0.0f), FAUSTFLOAT(0.4f), FAUSTFLOAT(0.01f));
-		ui_interface->addHorizontalSlider("volume", &fHslider2, FAUSTFLOAT(1.0f), FAUSTFLOAT(0.0f), FAUSTFLOAT(5.0f), FAUSTFLOAT(0.01f));
+		ui_interface->addHorizontalSlider("f", &fHslider3, FAUSTFLOAT(0.5f), FAUSTFLOAT(0.3f), FAUSTFLOAT(0.5f), FAUSTFLOAT(0.01f));
+		ui_interface->addHorizontalSlider("f0", &fHslider1, FAUSTFLOAT(1476.0f), FAUSTFLOAT(7.5e+02f), FAUSTFLOAT(1.7e+03f), FAUSTFLOAT(1.0f));
+		ui_interface->addHorizontalSlider("freq", &fHslider7, FAUSTFLOAT(6e+03f), FAUSTFLOAT(1e+03f), FAUSTFLOAT(1e+04f), FAUSTFLOAT(0.01f));
+		ui_interface->addHorizontalSlider("gain", &fHslider6, FAUSTFLOAT(0.0f), FAUSTFLOAT(0.0f), FAUSTFLOAT(0.4f), FAUSTFLOAT(0.01f));
+		ui_interface->addHorizontalSlider("l_drop", &fHslider5, FAUSTFLOAT(0.5f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.01f));
+		ui_interface->addHorizontalSlider("r_drop", &fHslider9, FAUSTFLOAT(0.5f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.01f));
+		ui_interface->addHorizontalSlider("time", &fHslider2, FAUSTFLOAT(0.5f), FAUSTFLOAT(0.5f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.01f));
+		ui_interface->addHorizontalSlider("volume", &fHslider8, FAUSTFLOAT(1.0f), FAUSTFLOAT(0.0f), FAUSTFLOAT(5.0f), FAUSTFLOAT(0.01f));
 		ui_interface->closeBox();
 	}
 	
@@ -10397,45 +10412,58 @@ class mydsp : public dsp {
 		FAUSTFLOAT* output0 = outputs[0];
 		FAUSTFLOAT* output1 = outputs[1];
 		float fSlow0 = float(fButton0);
-		float fSlow1 = fConst8 * float(fHslider0);
-		float fSlow2 = fConst8 * float(fHslider1);
+		float fSlow1 = float(fHslider1);
+		float fSlow2 = 0.0014f * std::pow(fSlow1, 1.5f);
 		float fSlow3 = float(fHslider2);
+		float fSlow4 = fSlow3 * (fSlow2 + 0.43f * fSlow1 * float(fHslider0));
+		float fSlow5 = fConst1 * fSlow4;
+		float fSlow6 = float(fHslider3) * fSlow1;
+		float fSlow7 = fConst2 * fSlow6;
+		float fSlow8 = fConst2 * fSlow4;
+		float fSlow9 = fConst2 * fSlow3;
+		float fSlow10 = fSlow2 + 0.03f * fSlow1 * float(fHslider4);
+		float fSlow11 = 0.007f * float(fHslider5);
+		float fSlow12 = fConst5 * float(fHslider6);
+		float fSlow13 = fConst5 * float(fHslider7);
+		float fSlow14 = float(fHslider8);
+		float fSlow15 = 0.007f * float(fHslider9);
 		for (int i0 = 0; i0 < count; i0 = i0 + 1) {
 			iVec1[0] = 1;
 			int iTemp0 = 1 - iVec1[1];
 			fVec2[0] = fSlow0;
 			iRec2[0] = ((fSlow0 > fVec2[1]) ? 0 : iRec2[1]) + 1;
 			float fTemp1 = float(iRec2[0]);
-			float fTemp2 = fConst1 * fTemp1 + 1.0f;
-			float fTemp3 = ((iTemp0) ? 0.0f : fRec1[1] + fConst2 * fTemp2);
+			float fTemp2 = fSlow5 * fTemp1 + 1.0f;
+			float fTemp3 = ((iTemp0) ? 0.0f : fRec1[1] + fSlow7 * fTemp2);
 			fRec1[0] = fTemp3 - std::floor(fTemp3);
-			fRec3[0] = 0.01f * std::exp(-(fConst3 * fTemp1)) + 0.99f * fRec3[1];
-			float fTemp4 = ((iTemp0) ? 0.0f : fRec5[1] + fConst4 * (4.9e+02f * fTemp2 + -3e+01f));
+			fRec3[0] = 0.01f * std::exp(-(fSlow8 * fTemp1)) + 0.99f * fRec3[1];
+			float fTemp4 = ((iTemp0) ? 0.0f : fRec5[1] + fConst2 * (fSlow6 * fTemp2 + -3e+01f));
 			fRec5[0] = fTemp4 - std::floor(fTemp4);
-			fRec6[0] = 0.01f * std::exp(-(78.4f * (fConst5 * fTemp1 + -0.0001f))) + 0.99f * fRec6[1];
-			fRec4[IOTA0 & 2047] = 0.2f * fRec4[(IOTA0 - iConst7) & 2047] + 0.5f * fRec6[0] * ftbl0mydspSIG0[std::max<int>(0, std::min<int>(int(65536.0f * fRec5[0]), 65535))];
+			fRec6[0] = 0.01f * std::exp(-(fSlow10 * (fSlow9 * fTemp1 + -0.0001f))) + 0.99f * fRec6[1];
+			fRec4[IOTA0 & 2047] = 0.2f * fRec4[(IOTA0 - iConst4) & 2047] + 0.5f * fRec6[0] * ftbl0mydspSIG0[std::max<int>(0, std::min<int>(int(65536.0f * fRec5[0]), 65535))];
+			float fTemp5 = fRec4[IOTA0 & 2047] + fRec3[0] * ftbl0mydspSIG0[std::max<int>(0, std::min<int>(int(65536.0f * fRec1[0]), 65535))];
 			iRec8[0] = 1103515245 * iRec8[1] + 12345;
-			float fTemp5 = float(iRec8[0]);
-			fRec9[0] = fSlow1 + fConst9 * fRec9[1];
-			int iTemp6 = 1103515245 * (iRec11[1] + 12345);
-			int iTemp7 = 1103515245 * (iTemp6 + 12345);
+			float fTemp6 = float(iRec8[0]);
+			fRec9[0] = fSlow12 + fConst6 * fRec9[1];
+			int iTemp7 = 1103515245 * (iRec11[1] + 12345);
 			int iTemp8 = 1103515245 * (iTemp7 + 12345);
 			int iTemp9 = 1103515245 * (iTemp8 + 12345);
-			iRec11[0] = 1103515245 * (iTemp9 + 12345);
-			int iRec12 = iTemp9;
-			int iRec13 = iTemp8;
-			int iRec14 = iTemp7;
-			int iRec15 = iTemp6;
-			fRec16[0] = fSlow2 + fConst9 * fRec16[1];
-			float fTemp10 = 1.0f / std::tan(fConst10 * fRec16[0] * (1.2479723e-10f * (float(iRec15) + float(iRec14) + float(iRec13) + float(iRec12) + float(iRec11[0])) + 1.0f));
-			fRec17[0] = 0.5221894f * fRec17[3] + 4.656613e-10f * fTemp5 + 2.494956f * fRec17[1] - 2.0172658f * fRec17[2];
-			float fTemp11 = 0.049922034f * fRec17[0] + 0.0506127f * fRec17[2] - (0.095993534f * fRec17[1] + 0.004408786f * fRec17[3]);
-			fVec3[0] = fTemp11;
-			fRec10[0] = -((fRec10[1] * (1.0f - fTemp10) - (fTemp11 + fVec3[1])) / (fTemp10 + 1.0f));
-			fRec7[IOTA0 & 32767] = 0.04f * fRec7[(IOTA0 - iConst11) & 32767] + fRec10[0] * std::min<float>(1.0f, std::max<float>(fRec9[0] + 0.025f * (2.3283064e-10f * fTemp5 + 0.5f), -1.0f));
-			float fTemp12 = fSlow3 * (float(std::fabs(fRec7[IOTA0 & 32767]) < 0.42f) * fRec7[(IOTA0 - 1) & 32767] + 0.0035f * (fRec4[IOTA0 & 2047] + fRec3[0] * ftbl0mydspSIG0[std::max<int>(0, std::min<int>(int(65536.0f * fRec1[0]), 65535))]));
-			output0[i0] = FAUSTFLOAT(fTemp12);
-			output1[i0] = FAUSTFLOAT(fTemp12);
+			int iTemp10 = 1103515245 * (iTemp9 + 12345);
+			iRec11[0] = 1103515245 * (iTemp10 + 12345);
+			int iRec12 = iTemp10;
+			int iRec13 = iTemp9;
+			int iRec14 = iTemp8;
+			int iRec15 = iTemp7;
+			fRec16[0] = fSlow13 + fConst6 * fRec16[1];
+			float fTemp11 = 1.0f / std::tan(fConst7 * fRec16[0] * (1.2479723e-10f * (float(iRec15) + float(iRec14) + float(iRec13) + float(iRec12) + float(iRec11[0])) + 1.0f));
+			fRec17[0] = 0.5221894f * fRec17[3] + 4.656613e-10f * fTemp6 + 2.494956f * fRec17[1] - 2.0172658f * fRec17[2];
+			float fTemp12 = 0.049922034f * fRec17[0] + 0.0506127f * fRec17[2] - (0.095993534f * fRec17[1] + 0.004408786f * fRec17[3]);
+			fVec3[0] = fTemp12;
+			fRec10[0] = -((fRec10[1] * (1.0f - fTemp11) - (fTemp12 + fVec3[1])) / (fTemp11 + 1.0f));
+			fRec7[IOTA0 & 32767] = 0.04f * fRec7[(IOTA0 - iConst8) & 32767] + fRec10[0] * std::min<float>(1.0f, std::max<float>(fRec9[0] + 0.025f * (2.3283064e-10f * fTemp6 + 0.5f), -1.0f));
+			float fTemp13 = float(std::fabs(fRec7[IOTA0 & 32767]) < 0.42f) * fRec7[(IOTA0 - 1) & 32767];
+			output0[i0] = FAUSTFLOAT(fSlow14 * (fTemp13 + fSlow11 * fTemp5));
+			output1[i0] = FAUSTFLOAT(fSlow14 * (fTemp13 + fSlow15 * fTemp5));
 			iVec1[1] = iVec1[0];
 			fVec2[1] = fVec2[0];
 			iRec2[1] = iRec2[0];
@@ -10465,19 +10493,33 @@ class mydsp : public dsp {
 	#define FAUST_COMPILATION_OPIONS "-a /usr/local/share/faust/teensy/teensy.cpp -lang cpp -i -ct 1 -es 1 -mcd 16 -mdd 1024 -mdy 33 -uim -single -ftz 0"
 	#define FAUST_INPUTS 0
 	#define FAUST_OUTPUTS 2
-	#define FAUST_ACTIVES 4
+	#define FAUST_ACTIVES 11
 	#define FAUST_PASSIVES 0
 
+	FAUST_ADDHORIZONTALSLIDER("damp", fHslider0, 0.5f, 0.4f, 0.6f, 0.01f);
+	FAUST_ADDHORIZONTALSLIDER("damp2", fHslider4, 0.5f, 0.4f, 0.6f, 0.01f);
 	FAUST_ADDBUTTON("drop", fButton0);
-	FAUST_ADDHORIZONTALSLIDER("freq", fHslider1, 6e+03f, 1e+03f, 1e+04f, 0.01f);
-	FAUST_ADDHORIZONTALSLIDER("gain", fHslider0, 0.0f, 0.0f, 0.4f, 0.01f);
-	FAUST_ADDHORIZONTALSLIDER("volume", fHslider2, 1.0f, 0.0f, 5.0f, 0.01f);
+	FAUST_ADDHORIZONTALSLIDER("f", fHslider3, 0.5f, 0.3f, 0.5f, 0.01f);
+	FAUST_ADDHORIZONTALSLIDER("f0", fHslider1, 1476.0f, 7.5e+02f, 1.7e+03f, 1.0f);
+	FAUST_ADDHORIZONTALSLIDER("freq", fHslider7, 6e+03f, 1e+03f, 1e+04f, 0.01f);
+	FAUST_ADDHORIZONTALSLIDER("gain", fHslider6, 0.0f, 0.0f, 0.4f, 0.01f);
+	FAUST_ADDHORIZONTALSLIDER("l_drop", fHslider5, 0.5f, 0.0f, 1.0f, 0.01f);
+	FAUST_ADDHORIZONTALSLIDER("r_drop", fHslider9, 0.5f, 0.0f, 1.0f, 0.01f);
+	FAUST_ADDHORIZONTALSLIDER("time", fHslider2, 0.5f, 0.5f, 1.0f, 0.01f);
+	FAUST_ADDHORIZONTALSLIDER("volume", fHslider8, 1.0f, 0.0f, 5.0f, 0.01f);
 
 	#define FAUST_LIST_ACTIVES(p) \
+		p(HORIZONTALSLIDER, damp, "damp", fHslider0, 0.5f, 0.4f, 0.6f, 0.01f) \
+		p(HORIZONTALSLIDER, damp2, "damp2", fHslider4, 0.5f, 0.4f, 0.6f, 0.01f) \
 		p(BUTTON, drop, "drop", fButton0, 0.0f, 0.0f, 1.0f, 1.0f) \
-		p(HORIZONTALSLIDER, freq, "freq", fHslider1, 6e+03f, 1e+03f, 1e+04f, 0.01f) \
-		p(HORIZONTALSLIDER, gain, "gain", fHslider0, 0.0f, 0.0f, 0.4f, 0.01f) \
-		p(HORIZONTALSLIDER, volume, "volume", fHslider2, 1.0f, 0.0f, 5.0f, 0.01f) \
+		p(HORIZONTALSLIDER, f, "f", fHslider3, 0.5f, 0.3f, 0.5f, 0.01f) \
+		p(HORIZONTALSLIDER, f0, "f0", fHslider1, 1476.0f, 7.5e+02f, 1.7e+03f, 1.0f) \
+		p(HORIZONTALSLIDER, freq, "freq", fHslider7, 6e+03f, 1e+03f, 1e+04f, 0.01f) \
+		p(HORIZONTALSLIDER, gain, "gain", fHslider6, 0.0f, 0.0f, 0.4f, 0.01f) \
+		p(HORIZONTALSLIDER, l_drop, "l_drop", fHslider5, 0.5f, 0.0f, 1.0f, 0.01f) \
+		p(HORIZONTALSLIDER, r_drop, "r_drop", fHslider9, 0.5f, 0.0f, 1.0f, 0.01f) \
+		p(HORIZONTALSLIDER, time, "time", fHslider2, 0.5f, 0.5f, 1.0f, 0.01f) \
+		p(HORIZONTALSLIDER, volume, "volume", fHslider8, 1.0f, 0.0f, 5.0f, 0.01f) \
 
 	#define FAUST_LIST_PASSIVES(p) \
 

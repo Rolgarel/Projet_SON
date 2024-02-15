@@ -27,14 +27,25 @@ void setup() {
   rainSynth.setParamValue("volume", volume);
 }
 
+void randomDrop() {
+  rainSynth.setParamValue("damp", random(40, 60)*0.01);
+  rainSynth.setParamValue("danp2", random(40, 60)*0.01);
+  rainSynth.setParamValue("f", random(30, 50)*0.01);
+  rainSynth.setParamValue("temps", random(50, 100)*0.01);
+  rainSynth.setParamValue("f0", random(750, 1700));
+  rainSynth.setParamValue("l_drop", random(0, 100)*0.01);
+  rainSynth.setParamValue("r_drop", random(0, 100)*0.01);
+}
+
 void drop() {
   int r = random(0, 1000000);
   int gate = 10;
   if (r < gate) {
+    randomDrop();
     rainSynth.setParamValue("drop", 1);
     delay(25);
     rainSynth.setParamValue("drop", 0);
-    delay(25);
+    delay(50);
   }
 }
 
