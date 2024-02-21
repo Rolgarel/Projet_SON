@@ -31,7 +31,7 @@ b_rumble = button("rumble");
 rumb(force) = rumble(0.8, 4, force) * rumble(0.8, 4, force) : fi.highpass(4, 8) : fi.lowpass(4, 1000);
 cra(force) = crackle(0.5,1) * force * 5;
 
-process = rumb(force) * 12 : ef.echo(0.1, 0.1, 0.05) + cra(force2) <: _ * l_bolt, _ * r_bolt
+process = cra(force2) <: _ * l_bolt, _ * r_bolt
     with {
         force = b_rumble : ba.impulsify : en.ar(2, 5) : *(0.61);
         force2 = b_rumble : ba.impulsify : en.ar(0.3, 2) : *(0.61);

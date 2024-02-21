@@ -18,7 +18,7 @@ void setup() {
   audioShield.enable();
   audioShield.volume(0.5);
   
-  V = 8.0/1023.0;
+  V = 10.0/1023.0;
   G = 0.4/1023.0;
   volume = 0;
   gain = 0;
@@ -52,8 +52,8 @@ void drop() {
 }
 
 void thunder() {
-   rainSynth.setParamValue("l_bolt", random(1,100)*0.01);
-   rainSynth.setParamValue("r_bolt", random(1,100)*0.01);
+   rainSynth.setParamValue("l_bolt", random(30,100)*0.01);
+   rainSynth.setParamValue("r_bolt", random(30,100)*0.01);
    rainSynth.setParamValue("rumble", 1);
    delay(25);
    rainSynth.setParamValue("rumble", 0);
