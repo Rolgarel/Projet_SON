@@ -10484,7 +10484,7 @@ class mydsp : public dsp {
 		fHslider6 = FAUSTFLOAT(0.5f);
 		fHslider7 = FAUSTFLOAT(0.0f);
 		fHslider8 = FAUSTFLOAT(6e+03f);
-		fHslider9 = FAUSTFLOAT(1.0f);
+		fHslider9 = FAUSTFLOAT(1e+01f);
 		fHslider10 = FAUSTFLOAT(1.0f);
 		fHslider11 = FAUSTFLOAT(0.5f);
 	}
@@ -10689,7 +10689,7 @@ class mydsp : public dsp {
 		ui_interface->addHorizontalSlider("r_drop", &fHslider11, FAUSTFLOAT(0.5f), FAUSTFLOAT(0.1f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.01f));
 		ui_interface->addButton("rumble", &fButton0);
 		ui_interface->addHorizontalSlider("time", &fHslider3, FAUSTFLOAT(0.5f), FAUSTFLOAT(0.5f), FAUSTFLOAT(1.0f), FAUSTFLOAT(0.01f));
-		ui_interface->addHorizontalSlider("volume", &fHslider9, FAUSTFLOAT(1.0f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1e+01f), FAUSTFLOAT(0.01f));
+		ui_interface->addHorizontalSlider("volume", &fHslider9, FAUSTFLOAT(1e+01f), FAUSTFLOAT(0.0f), FAUSTFLOAT(1e+02f), FAUSTFLOAT(0.01f));
 		ui_interface->closeBox();
 	}
 	
@@ -10916,7 +10916,7 @@ class mydsp : public dsp {
 	FAUST_ADDHORIZONTALSLIDER("r_drop", fHslider11, 0.5f, 0.1f, 1.0f, 0.01f);
 	FAUST_ADDBUTTON("rumble", fButton0);
 	FAUST_ADDHORIZONTALSLIDER("time", fHslider3, 0.5f, 0.5f, 1.0f, 0.01f);
-	FAUST_ADDHORIZONTALSLIDER("volume", fHslider9, 1.0f, 0.0f, 1e+01f, 0.01f);
+	FAUST_ADDHORIZONTALSLIDER("volume", fHslider9, 1e+01f, 0.0f, 1e+02f, 0.01f);
 
 	#define FAUST_LIST_ACTIVES(p) \
 		p(HORIZONTALSLIDER, damp, "damp", fHslider1, 0.5f, 0.4f, 0.6f, 0.01f) \
@@ -10932,7 +10932,7 @@ class mydsp : public dsp {
 		p(HORIZONTALSLIDER, r_drop, "r_drop", fHslider11, 0.5f, 0.1f, 1.0f, 0.01f) \
 		p(BUTTON, rumble, "rumble", fButton0, 0.0f, 0.0f, 1.0f, 1.0f) \
 		p(HORIZONTALSLIDER, time, "time", fHslider3, 0.5f, 0.5f, 1.0f, 0.01f) \
-		p(HORIZONTALSLIDER, volume, "volume", fHslider9, 1.0f, 0.0f, 1e+01f, 0.01f) \
+		p(HORIZONTALSLIDER, volume, "volume", fHslider9, 1e+01f, 0.0f, 1e+02f, 0.01f) \
 
 	#define FAUST_LIST_PASSIVES(p) \
 

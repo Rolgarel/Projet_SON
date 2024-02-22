@@ -10,7 +10,7 @@ rain_gain = min(1, max(gain + gain_noise, -1));
 
 rain_noise = no.pink_noise : fi.lowpass(1, rain_freq) * rain_gain : ef.echo(0.1, 0.1, 0.04) <: _,_;
 
-rain_volume = hslider("volume", 1, 0, 10, 0.01);
+rain_volume = hslider("volume", 10, 0, 100, 0.01);
 rain = rain_noise : par(i, 2, drop) : par(i, 2, *(rain_volume))
     with {
         drop = _ <: @(1), (abs < 0.42) : *;
