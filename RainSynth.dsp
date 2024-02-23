@@ -16,6 +16,12 @@ rain = rain_noise : par(i, 2, drop) : par(i, 2, *(rain_volume))
         drop = _ <: @(1), (abs < 0.42) : *;
     };
 
+//---------------------------------------------------------------------------------------------
+//
+//  Le code de bubble est une adaptation du code de l'exemple bubble
+//  disponible en ligne sur : https://faustdoc.grame.fr/examples/gameaudio/#bubble
+//
+//---------------------------------------------------------------------------------------------
 bubble = os.osc(f) * (exp(-damp*time) : si.smooth(0.99)) + (os.osc(f - 30) * (exp(-damp2*(time-0.0001)) : si.smooth(0.99))* 0.5 : ef.echo(0.1,0.01, 0.2))
     with {
         f0 = hslider("f0", 1476, 750, 1700, 1);
@@ -36,6 +42,12 @@ rain_drop = bubble * 0.009 * rain_volume <: _ * l_drop, _ * r_drop;
 sq(x) = x * x;
 stretch(ms) = ba.countdown(ma.SR * ms / 2000): >(0);
 
+//---------------------------------------------------------------------------------------------
+//
+//  Les codes de crackle et rumble sont des adaptations du code de crackle dans l'exemple fire
+//  disponible en ligne sur : https://faustdoc.grame.fr/examples/gameaudio/#fire
+//
+//---------------------------------------------------------------------------------------------
 rumble(dens, rel, fo) = ((no.noise : fi.lowpass(3, 100)) * 13.12 * os.osc(50 / dens) * fo
                       * en.arfe(0.05, release , 0, trigger: >(0)
                       : stretch(sus)))
